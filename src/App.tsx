@@ -1,8 +1,7 @@
 import "./App.css";
-import { Typography } from "@mui/material";
-
+import { Outlet } from "react-router-dom";
 function App() {
-  return <Typography variant="h1">Hello World</Typography>;
+  return <Outlet />;
 }
 
 export default App;
