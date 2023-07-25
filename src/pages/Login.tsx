@@ -1,8 +1,9 @@
 import { TextField, Button, Container } from "@mui/material";
 import { useFormik } from 'formik';
-
+// import { useTheme } from "@mui/material/styles";
 
   const Login = () => {
+    // const theme = useTheme();
     const formik = useFormik({
       initialValues: {
         email: '',
@@ -25,6 +26,7 @@ import { useFormik } from 'formik';
           onBlur={formik.handleBlur}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
+          sx={{mb: 2}}
         />
         <TextField
         fullWidth
@@ -37,6 +39,7 @@ import { useFormik } from 'formik';
         onBlur={formik.handleBlur}
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
+        sx={{mb: 2}}
       />
       <Button color="primary" variant="contained" fullWidth type="submit">
         Submit
