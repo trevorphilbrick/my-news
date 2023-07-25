@@ -9,6 +9,8 @@ import "@fontsource/roboto/700.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./components/Feed.tsx";
 import Welcome from "./components/Welcome.tsx";
+import SignUp from "./pages/SignIn.tsx";
+import Login from "./pages/login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,9 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Feed /> },
       { path: "welcome", element: <Welcome /> },
+      {path: "signup", element: <SignUp />},
+      {path: "login", element: <Login />}
+      
     ],
   },
 ]);
