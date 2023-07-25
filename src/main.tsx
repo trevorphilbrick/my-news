@@ -9,7 +9,7 @@ import "@fontsource/roboto/700.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./components/Feed.tsx";
 import Welcome from "./components/Welcome.tsx";
-import SignUp from "./pages/SignIn.tsx";
+import SignUp from "./pages/SignUp.tsx";
 import Login from "./pages/Login.tsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 

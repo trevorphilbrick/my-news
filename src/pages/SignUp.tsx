@@ -1,22 +1,23 @@
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useFormik } from 'formik';
 
-const Login = () => {
+const SignUp = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      confirmPassword: '',
     },onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
-  
+
   return (
     <Container sx={{height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <form 
-      // style={{boxShadow: '0px 5px 20px lightGrey', borderRadius: 10, paddingTop: 100, paddingBottom: 100, paddingRight: 75, paddingLeft: 75}} 
-      onSubmit={formik.handleSubmit}>
-        <Typography variant="subtitle1" sx={{mb: 1}}>Login to an existing MY NEWS account to view the latest news!</Typography>
+      <form
+      // style={{boxShadow: '0px 5px 20px lightGrey', borderRadius: 10, paddingTop: 100, paddingBottom: 100, paddingRight: 75, paddingLeft: 75}}
+       onSubmit={formik.handleSubmit}>
+        <Typography variant="subtitle1" sx={{mb: 1}}>Create a MY NEWS account to view the latest news!</Typography>
         <TextField
           fullWidth
           id="email"
@@ -42,6 +43,19 @@ const Login = () => {
         helperText={formik.touched.password && formik.errors.password}
         sx={{mb: 2}}
       />
+        <TextField
+        fullWidth
+        id="confirmPassword"
+        name="confirmPassword"
+        label="Confirm Password"
+        type="password"
+        value={formik.values.confirmPassword}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.password && Boolean(formik.errors.password)}
+        helperText={formik.touched.password && formik.errors.password}
+        sx={{mb: 2}}
+      />
       <Button color="primary" variant="contained" fullWidth type="submit">
         Submit
       </Button>
@@ -50,4 +64,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default SignUp;
