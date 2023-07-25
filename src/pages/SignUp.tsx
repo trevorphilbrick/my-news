@@ -1,67 +1,85 @@
-import { TextField, Button, Container, Typography } from "@mui/material";
-import { useFormik } from 'formik';
-
+import {useState} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from '../firebase';
+ 
 const SignUp = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
+    const navigate = useNavigate();
+ 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+ 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onSubmit = async (e: React.FormEvent): Promise<any> => {
+      e.preventDefault()
+     
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+            navigate("/login")
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+ 
+   
+    }
+ 
   return (
-    <Container sx={{height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <form
-      // style={{boxShadow: '0px 5px 20px lightGrey', borderRadius: 10, paddingTop: 100, paddingBottom: 100, paddingRight: 75, paddingLeft: 75}}
-       onSubmit={formik.handleSubmit}>
-        <Typography variant="subtitle1" sx={{mb: 1}}>Create a MY NEWS account to view the latest news!</Typography>
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-          sx={{mb: 2}} 
-        />
-        <TextField
-        fullWidth
-        id="password"
-        name="password"
-        label="Password"
-        type="password"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-        sx={{mb: 2}}
-      />
-        <TextField
-        fullWidth
-        id="confirmPassword"
-        name="confirmPassword"
-        label="Confirm Password"
-        type="password"
-        value={formik.values.confirmPassword}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.password && Boolean(formik.errors.password)}
-        helperText={formik.touched.password && formik.errors.password}
-        sx={{mb: 2}}
-      />
-      <Button color="primary" variant="contained" fullWidth type="submit">
-        Submit
-      </Button>
-      </form>
-    </Container>
-  );
+    <main >        
+        <section>
+            <div>
+                <div>                  
+                    <h1> FocusApp </h1>                                                                            
+                    <form>                                                                                            
+                        <div>
+                            <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Email address"                                
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required                                 
+                                placeholder="Password"              
+                            />
+                        </div>                                             
+                        
+                        <button
+                            type="submit" 
+                            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                            onClick={onSubmit}                        
+                        >  
+                            Sign up                                
+                        </button>
+                                                                     
+                    </form>
+                   
+                    <p>
+                        Already have an account?{' '}
+                        <NavLink to="/login" >
+                            Sign in
+                        </NavLink>
+                    </p>                   
+                </div>
+            </div>
+        </section>
+    </main>
+  )
 }
 
 export default SignUp;
