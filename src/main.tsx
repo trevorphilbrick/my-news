@@ -11,6 +11,13 @@ import Feed from "./components/Feed.tsx";
 import Welcome from "./components/Welcome.tsx";
 import SignUp from "./pages/SignIn.tsx";
 import Login from "./pages/login.tsx";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -19,15 +26,16 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Feed /> },
       { path: "welcome", element: <Welcome /> },
-      {path: "signup", element: <SignUp />},
-      {path: "login", element: <Login />}
-      
+      { path: "signup", element: <SignUp /> },
+      { path: "login", element: <Login /> },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );

@@ -1,10 +1,11 @@
-import store from "../zustand/store";
+import NavBar from "./feedComponents/NavBar";
+import TopicBar from "./feedComponents/TopicBar";
+
 function Feed() {
-  const { count, inc, dec } = store();
   return (
     <div>
-      {count} <div onClick={() => inc()}>increase</div>{" "}
-      <div onClick={() => dec()}>decrease</div>
+      <NavBar />
+      <TopicBar />
     </div>
   );
 }

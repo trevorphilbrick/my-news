@@ -1,4 +1,6 @@
 import { Container, Tab, Tabs } from "@mui/material";
+import { tabsClasses } from "@mui/material/Tabs";
+import { useTheme } from "@mui/material/styles";
 
 const topics = [
   "Business",
@@ -18,14 +20,21 @@ const topics = [
 ];
 
 function TopicBar() {
+  const theme = useTheme();
   return (
-    <Container>
+    <Container sx={{ backgroundColor: theme.palette.background.default }}>
       <Tabs
         variant="scrollable"
-        scrollButtons="auto"
+        scrollButtons
         allowScrollButtonsMobile
         value={null}
         onChange={() => null}
+        sx={{
+          [`& .${tabsClasses.scrollButtons}`]: {
+            color: theme.palette.text.primary,
+            "&.Mui-disabled": { opacity: 0.3 },
+          },
+        }}
       >
         {topics.map((topic) => (
           <Tab key={topic} label={topic} />
