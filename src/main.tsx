@@ -10,7 +10,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./components/Feed.tsx";
 import Welcome from "./components/Welcome.tsx";
 import SignUp from "./pages/SignIn.tsx";
-import Login from "./pages/login.tsx";
+import Login from "./pages/Login.tsx";
 
 const router = createBrowserRouter([
   {
