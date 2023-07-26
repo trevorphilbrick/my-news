@@ -1,9 +1,9 @@
-import { AppBar, Container, Typography } from "@mui/material";
+import { AppBar, Button, Container, Typography } from "@mui/material";
 
-function NavBar() {
+function NavBar({ handleLogout }) {
   return (
     <AppBar position="static">
-      <Container>
+      <Container sx={{display: 'flex', flexDirection: 'row'}}>
         <Typography
           variant="h5"
           sx={{
@@ -16,6 +16,7 @@ function NavBar() {
         >
           My News
         </Typography>
+        <Button variant="outline" size="small" sx={{marginLeft: 'auto'}} onClick={handleLogout}>Log Out</Button>
       </Container>
     </AppBar>
   );
