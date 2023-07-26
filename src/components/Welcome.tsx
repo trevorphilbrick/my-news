@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {  signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from 'react-router-dom';
+import NavBar from "./feedComponents/NavBar";
 
 function Welcome() {
   const navigate = useNavigate();
@@ -34,13 +35,10 @@ function Welcome() {
   }, [])
 
   return (
-  <div>Welcome 
     <div>
-          <button onClick={handleLogout}>
-              Logout
-          </button>
-  </div>
-  </div>);
+      <NavBar handleLogout={handleLogout}/>
+      <div>Welcome</div>
+    </div>);
 }
 
 export default Welcome;
