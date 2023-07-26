@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import NavBar from "./feedComponents/NavBar";
+import TopStories from "./feedComponents/TopStories";
 import TopicBar from "./feedComponents/TopicBar";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
@@ -40,6 +41,7 @@ function Feed() {
     <div>
       <NavBar handleLogout={handleLogout}/>
       <TopicBar />
+      <TopStories />
     </div>
   );
 }
