@@ -30,9 +30,7 @@ const Login = () => {
         <NavBar />
             <main >        
                 <section>
-                    <div>                                            
-                        <p> FocusApp </p>                       
-                                                       
+                    <div>                                                                        
                         <form>                                              
                             <div>
                                 <label htmlFor="email-address">

@@ -2,6 +2,7 @@ import {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase';
+import NavBar from '../components/feedComponents/NavBar';
  
 const SignUp = () => {
     const navigate = useNavigate();
@@ -27,11 +28,12 @@ const SignUp = () => {
     }
  
   return (
+  <>
+    <NavBar />
     <main >        
         <section>
             <div>
-                <div>                  
-                    <h1> FocusApp </h1>                                                                            
+                <div>                                                                                            
                     <form>                                                                                            
                         <div>
                             <label htmlFor="email-address">
@@ -79,6 +81,7 @@ const SignUp = () => {
             </div>
         </section>
     </main>
+    </>
   )
 }
 
