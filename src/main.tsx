@@ -12,7 +12,6 @@ import Welcome from "./components/Welcome.tsx";
 import SignUp from "./pages/SignIn.tsx";
 import Login from "./pages/Login.tsx";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 const theme = createTheme({
   palette: {
     mode: "dark",

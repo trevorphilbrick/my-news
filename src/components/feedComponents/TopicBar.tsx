@@ -2,6 +2,7 @@ import { Container, Divider, Tab, Tabs } from "@mui/material";
 import { tabsClasses } from "@mui/material/Tabs";
 import { useTheme } from "@mui/material/styles";
 import { useState, SyntheticEvent } from "react";
+import useThemeDetector from "../../hooks/useThemeDetector.ts";
 
 const topics = [
   "General",
@@ -16,11 +17,14 @@ const topics = [
 const recentTopics = ["Cryptocurrency", "Russia", "Covid-19"];
 
 function TopicBar() {
+  const currentMode = useThemeDetector();
+
+  console.log(currentMode);
   const theme = useTheme();
   const [value, setValue] = useState(0);
   return (
     <Container
-      sx={{ backgroundColor: theme.palette.background.default, zIndex: -100 }}
+      sx={{ backgroundColor: theme.palette.background.default, mb: 4 }}
     >
       <Tabs
         variant="scrollable"
