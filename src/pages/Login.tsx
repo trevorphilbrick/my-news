@@ -1,85 +1,67 @@
-import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase';
-import { NavLink, useNavigate } from 'react-router-dom'
-import NavBar from '../components/feedComponents/NavBar';
- 
+import { useFormik } from 'formik';
+import { Button, Container, TextField } from '@mui/material';
+
 const Login = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-       
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const onLogin = (e: React.FormEvent): Promise<any> => {
-        e.preventDefault();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            navigate("/welcome")
-            console.log(user);
-        })
-        .catch((error) => {
-            console.log(error)
+                
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        onSubmit: (values) => {
+            signInWithEmailAndPassword(auth, values.email, values.password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                navigate("/welcome")
+                console.log(user);
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        },
         });
-       
-    }
  
     return(
         <>
-        <NavBar />
-            <main >        
-                <section>
-                    <div>                                                                        
-                        <form>                                              
-                            <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
-                                <input
-                                    id="email-address"
-                                    name="email"
-                                    type="email"                                    
-                                    required                                                                                
-                                    placeholder="Email address"
-                                    onChange={(e)=>setEmail(e.target.value)}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"                                    
-                                    required                                                                                
-                                    placeholder="Password"
-                                    onChange={(e)=>setPassword(e.target.value)}
-                                />
-                            </div>
-                                                
-                            <div>
-                                <button         
-                                  // eslint-disable-next-line @typescript-eslint/no-misused-promises                         
-                                    onClick={onLogin}                                        
-                                >      
-                                    Login                                                                  
-                                </button>
-                            </div>                               
-                        </form>
-                       
-                        <p className="text-sm text-white text-center">
-                            No account yet? {' '}
-                            <NavLink to="/signup">
-                                Sign up
-                            </NavLink>
-                        </p>
-                                                   
-                    </div>
-                </section>
-            </main>
+                <Container sx={{ height: '100vh'}}>
+                    <Container sx={{display: 'flex', height: '80vh', justifyContent: 'center', alignItems: 'center'}}>
+                    <form onSubmit={formik.handleSubmit}>
+                        <TextField
+                            fullWidth
+                            id="email"
+                            name="email"
+                            label="Email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
+                            sx={{mb: 2}}
+                        />
+                        <TextField
+                            fullWidth
+                            id="password"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
+                            sx={{mb: 2}}
+                        />
+                        <Button color="primary" variant="contained" fullWidth type="submit">
+                            Login
+                        </Button>
+                    </form>
+                    </Container>
+                </Container>
         </>
     )
 }
