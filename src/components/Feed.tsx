@@ -1,12 +1,18 @@
+import { Grid, Container } from "@mui/material";
 import TopStories from "./feedComponents/TopStories";
 import TopicBar from "./feedComponents/TopicBar";
+import Sidebar from "./feedComponents/Sidebar";
 
 function Feed() {
-  
   return (
     <div>
       <TopicBar />
-      <TopStories />
+      <Container>
+        <Grid container spacing={2}>
+          <TopStories />
+          <Sidebar />
+        </Grid>
+      </Container>
     </div>
   );
 }

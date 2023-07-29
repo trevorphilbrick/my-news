@@ -6,41 +6,53 @@ import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
+import useMockData from "./zustand/mockData";
 
 function App() {
+  const { setMockData, isUsingMockData } = useMockData((state) => state);
+
+  // set to true to use mock data
+  useEffect(() => {
+    setMockData(true);
+  }, []);
+
+  useEffect(() => {
+    console.log(isUsingMockData);
+  }, [isUsingMockData]);
   const theme = useTheme();
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogout = () => {               
-    signOut(auth).then(() => {
-    // Sign-out successful.
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
         navigate("/login");
-        console.log("Signed out successfully")
-    }).catch((error) => {
-    console.log(error)
-    });
-}
-
-  useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          const uid = user.uid;
-          // ...
-          console.log("uid", uid)
-        } else {
-          // User is signed out
-          // ...
-          console.log("user is logged out")
-        }
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        console.log(error);
       });
-     
-}, [])
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        console.log("uid", uid);
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out");
+      }
+    });
+  }, []);
 
   return (
     <div style={{ backgroundColor: theme.palette.background.default }}>
-      <NavBar handleLogout={handleLogout}/>
+      <NavBar handleLogout={handleLogout} />
       <Outlet />
     </div>
   );
