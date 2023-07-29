@@ -7,6 +7,7 @@ import { useEffect } from "react";
 function App() {
   const { setMockData, isUsingMockData } = useMockData((state) => state);
 
+  // set to true to use mock data
   useEffect(() => {
     setMockData(true);
   }, []);
