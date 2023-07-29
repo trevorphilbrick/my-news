@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const theme = useTheme();
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const handleLogout = () => {               
     signOut(auth).then(() => {
