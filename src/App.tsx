@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
+import useMockData from "./zustand/mockData";
 
 function App() {
   const { setMockData, isUsingMockData } = useMockData((state) => state);
