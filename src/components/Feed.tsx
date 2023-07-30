@@ -8,7 +8,7 @@ function Feed() {
     <div>
       <TopicBar />
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ minHeight: "100vh" }}>
           <TopStories />
           <Sidebar />
         </Grid>
