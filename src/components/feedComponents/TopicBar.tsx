@@ -1,8 +1,8 @@
 import { Container, Divider, Tab, Tabs } from "@mui/material";
 import { tabsClasses } from "@mui/material/Tabs";
 import { useTheme } from "@mui/material/styles";
-import { useState, SyntheticEvent } from "react";
-import useThemeDetector from "../../hooks/useThemeDetector.ts";
+import { useState, SyntheticEvent, useEffect } from "react";
+import useArticleStore from "../../zustand/articleStore";
 
 const topics = [
   "General",
@@ -17,11 +17,17 @@ const topics = [
 const recentTopics = ["Cryptocurrency", "Russia", "Covid-19"];
 
 function TopicBar() {
-  const currentMode = useThemeDetector();
-
-  console.log(currentMode);
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const setCurrentTopic = useArticleStore((state) => state.setCurrentTopic);
+
+  useEffect(() => {
+    console.log("value", value);
+    setCurrentTopic(topics[value]);
+  }, [value]);
+
+  const allTopics = topics.concat(recentTopics);
+
   return (
     <Container
       sx={{ backgroundColor: theme.palette.background.default, mb: 4 }}
@@ -39,12 +45,13 @@ function TopicBar() {
           },
         }}
       >
-        {topics.map((topic) => (
-          <Tab key={topic} label={topic} />
-        ))}
-        <Divider orientation="vertical" flexItem variant="middle" />
-        {recentTopics.map((topic) => (
-          <Tab key={topic} label={topic} />
+        {allTopics.map((topic, index) => (
+          <Tab
+            key={topic}
+            label={topic}
+            value={topic}
+            sx={{ color: theme.palette.text.primary }}
+          />
         ))}
       </Tabs>
     </Container>

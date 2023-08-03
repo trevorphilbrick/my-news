@@ -8,50 +8,17 @@ import {
   Grid,
   Skeleton,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Article } from "../../types/GNewsAPI";
-import { Topic } from "../../types/GNewsAPI";
-import useMockData from "../../zustand/mockData";
-import mockGeneralCall from "../../mocks/mockGeneralCall.json";
+import useFetchTopStories from "../../hooks/useFetchStories";
+import useArticleStore from "../../zustand/articleStore";
 
 // TODO: refactor top level container and grid to house both top stories and sidebar
 
 function TopStories() {
-  const [topicData, setTopicData] = useState<Topic>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-  const { isUsingMockData } = useMockData((state) => state);
-
-  const apiKey = "0da7612e9e1a6f2ded0664ff4c950d54";
+  const currentTopic = useArticleStore((state) => state.currentTopic);
+  const { stories, isLoading, error } = useFetchTopStories(currentTopic);
 
   const skeletonLoaderHeights = [190, 200, 180, 200, 180, 180, 200, 160];
-
-  const fetchStories = async (topicId: string) => {
-    setIsLoading(true);
-    if (isUsingMockData) {
-      setTopicData(mockGeneralCall as Topic);
-      setIsLoading(false);
-      return;
-    } else {
-      const response = await fetch(
-        ` https://gnews.io/api/v4/top-headlines?category=${
-          topicId || "general"
-        }&lang=en&apikey=${apiKey}`
-      ).catch((error) => {
-        console.log(error);
-        setIsError(true);
-      });
-
-      const data = (await response.json()) as Topic;
-      console.log(data);
-      setTopicData(data);
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchStories("general");
-  }, []);
 
   const handleReadMore = (article: Article) => {
     window.open(article.url, "_blank");
@@ -59,36 +26,33 @@ function TopStories() {
 
   return (
     <Grid item xs={12} md={7}>
-      {isLoading ? (
+      {isLoading || (stories.length < 1 && !error) ? (
         <Skeleton
           variant="rounded"
           sx={{ height: 200, width: "100%", mb: 2 }}
           animation="wave"
         />
-      ) : isError ? (
+      ) : error ? (
         <Typography>Unable to load, try refreshing the page...</Typography>
       ) : (
         <Card sx={{ mb: 2 }}>
           <CardMedia
             sx={{ height: 200 }}
-            image={topicData?.articles[0].image || "../images/placeholder.png"}
-            title={topicData?.articles[0].title}
+            image={stories[0].image || "../images/placeholder.png"}
+            title={stories[0].title}
             component={"img"}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {topicData ? topicData.articles[0].title : null}
+              {stories ? stories[0].title : null}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {topicData ? topicData.articles[0].description : null}
+              {stories ? stories[0].description : null}
             </Typography>
           </CardContent>
           <CardActions>
-            {topicData ? (
-              <Button
-                size="small"
-                onClick={() => handleReadMore(topicData?.articles[0])}
-              >
+            {stories ? (
+              <Button size="small" onClick={() => handleReadMore(stories[0])}>
                 Read More
               </Button>
             ) : null}
@@ -109,9 +73,9 @@ function TopStories() {
                 </Grid>
               );
             })
-          : isError
+          : error
           ? null
-          : topicData?.articles
+          : stories
               ?.filter((_item, index) => index !== 0)
               .map((article: Article, index) => {
                 return (

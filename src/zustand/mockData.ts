@@ -6,7 +6,7 @@ export type UseMockData = {
 };
 
 const useMockData = create<UseMockData>()((set) => ({
-  isUsingMockData: true,
+  isUsingMockData: false,
   setMockData: (isUsingMockData: boolean) => set(() => ({ isUsingMockData })),
 }));
 
