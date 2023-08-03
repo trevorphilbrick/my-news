@@ -24,28 +24,31 @@ function TopStories() {
 
   return (
     <Grid item xs={12} md={7}>
-      {isLoading || (stories.length < 1 && !error) ? (
+      {isLoading ? (
         <Skeleton
           variant="rounded"
           sx={{ height: 200, width: "100%", mb: 2 }}
           animation="wave"
         />
       ) : error ? (
-        <Typography>Unable to load, try refreshing the page...</Typography>
+        <>
+          <Typography>Unable to load, try refreshing the page...</Typography>
+          <Typography>{error}</Typography>
+        </>
       ) : (
         <Card sx={{ mb: 2 }}>
           <CardMedia
             sx={{ height: 200 }}
-            image={stories[0].image || "../images/placeholder.png"}
-            title={stories[0].title}
+            image={stories[0]?.image || "../images/placeholder.png"}
+            title={stories[0]?.title}
             component={"img"}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {stories ? stories[0].title : null}
+              {stories ? stories[0]?.title : null}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {stories ? stories[0].description : null}
+              {stories ? stories[0]?.description : null}
             </Typography>
           </CardContent>
           <CardActions>
