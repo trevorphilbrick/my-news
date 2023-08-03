@@ -14,8 +14,7 @@ const useArticleStore = create<UseArticleStore>((set) => ({
   setCurrentArticles: (currentArticles: Article[]) =>
     set(() => ({ currentArticles })),
   setCurrentTopic: (current: string) => {
-    set(() => ({ current }));
-    console.log(current);
+    set(() => ({ currentTopic: current }));
   },
 }));
 

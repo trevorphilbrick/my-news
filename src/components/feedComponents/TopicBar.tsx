@@ -22,7 +22,6 @@ function TopicBar() {
   const setCurrentTopic = useArticleStore((state) => state.setCurrentTopic);
 
   useEffect(() => {
-    console.log("value", value);
     setCurrentTopic(value);
   }, [value]);
 
@@ -45,7 +44,7 @@ function TopicBar() {
           },
         }}
       >
-        {allTopics.map((topic, index) => (
+        {allTopics.map((topic) => (
           <Tab
             key={topic}
             label={topic}

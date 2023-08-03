@@ -10,18 +10,11 @@ import {
 } from "@mui/material";
 import { Article } from "../../types/GNewsAPI";
 import useFetchTopStories from "../../hooks/useFetchStories";
-import useArticleStore from "../../zustand/articleStore";
-import { useEffect } from "react";
 
 // TODO: refactor top level container and grid to house both top stories and sidebar
 
 function TopStories() {
-  const currentTopic = useArticleStore((state) => state.currentTopic);
-  const { stories, isLoading, error } = useFetchTopStories(currentTopic);
-
-  useEffect(() => {
-    console.log(currentTopic);
-  }, [currentTopic]);
+  const { stories, isLoading, error } = useFetchTopStories();
 
   const skeletonLoaderHeights = [190, 200, 180, 200, 180, 180, 200, 160];
 

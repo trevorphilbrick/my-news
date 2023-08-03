@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import useArticleStore from "../zustand/articleStore";
 
-const useFetchTopStories = (topic: string) => {
+const useFetchTopStories = () => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const currentTopic = useArticleStore((state) => state.currentTopic);
 
   useEffect(() => {
+    console.log(`Fetching stories for ${currentTopic}`);
     setIsLoading(true);
     fetch(
-      `https://gnews.io/api/v4/search?q=${topic}&lang=en&token=${
+      `https://gnews.io/api/v4/search?q=${currentTopic}&lang=en&token=${
         import.meta.env.VITE_GNEWS_API_KEY
       }`
     )
@@ -22,7 +25,7 @@ const useFetchTopStories = (topic: string) => {
         setError(err);
         setIsLoading(false);
       });
-  }, [topic]);
+  }, [currentTopic]);
 
   return { stories, isLoading, error };
 };
