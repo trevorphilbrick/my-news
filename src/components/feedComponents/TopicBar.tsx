@@ -23,7 +23,7 @@ function TopicBar() {
 
   useEffect(() => {
     console.log("value", value);
-    setCurrentTopic(topics[value]);
+    setCurrentTopic(value);
   }, [value]);
 
   const allTopics = topics.concat(recentTopics);

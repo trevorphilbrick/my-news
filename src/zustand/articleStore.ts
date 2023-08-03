@@ -5,7 +5,7 @@ export type UseArticleStore = {
   currentArticles: Article[] | null;
   currentTopic: string | null;
   setCurrentArticles: (currentArticles: Article[]) => void;
-  setCurrentTopic: (currentTopic: string) => void;
+  setCurrentTopic: (current: string) => void;
 };
 
 const useArticleStore = create<UseArticleStore>((set) => ({
@@ -13,7 +13,10 @@ const useArticleStore = create<UseArticleStore>((set) => ({
   currentArticles: [],
   setCurrentArticles: (currentArticles: Article[]) =>
     set(() => ({ currentArticles })),
-  setCurrentTopic: (currentTopic: string) => set(() => ({ currentTopic })),
+  setCurrentTopic: (current: string) => {
+    set(() => ({ current }));
+    console.log(current);
+  },
 }));
 
 export default useArticleStore;

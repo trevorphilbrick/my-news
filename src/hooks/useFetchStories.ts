@@ -14,6 +14,7 @@ const useFetchTopStories = (topic: string) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setStories(data.articles);
         setIsLoading(false);
       })
