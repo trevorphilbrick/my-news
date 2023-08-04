@@ -8,12 +8,11 @@ const useFetchTopStories = () => {
   const currentTopic = useArticleStore((state) => state.currentTopic);
 
   useEffect(() => {
-    console.log(`Fetching stories for ${currentTopic}`);
     setIsLoading(true);
     fetch(
-      `https://gnews.io/api/v4/search?q=${currentTopic}&lang=en&token=${
-        import.meta.env.VITE_GNEWS_API_KEY
-      }`
+      `https://gnews.io/api/v4/search?q=${
+        currentTopic as string
+      }&lang=en&token=${import.meta.env.VITE_GNEWS_API_KEY as string}`
     )
       .then((res) => res.json())
       .then((data) => {

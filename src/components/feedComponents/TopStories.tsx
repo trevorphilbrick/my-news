@@ -7,6 +7,7 @@ import {
   Typography,
   Grid,
   Skeleton,
+  Tooltip,
 } from "@mui/material";
 import { Article } from "../../types/GNewsAPI";
 import useFetchTopStories from "../../hooks/useFetchStories";
@@ -93,51 +94,53 @@ function TopStories() {
               .map((article: Article, index) => {
                 return (
                   <Grid item xs={12} sm={6} key={index}>
-                    <Card sx={{ position: "relative" }}>
-                      <CardMedia
-                        sx={{ height: 140 }}
-                        image={article.image || "../images/placeholder.png"}
-                        title={article.title}
-                        component={"img"}
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          component="div"
-                          sx={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                          fontWeight={600}
-                        >
-                          {article.title}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          sx={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {article.description}
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                        <Button
-                          size="small"
-                          onClick={() => handleReadMore(article)}
-                        >
-                          Read More
-                        </Button>
-                      </CardActions>
-                    </Card>
+                    <Tooltip title={article.description}>
+                      <Card sx={{ position: "relative" }}>
+                        <CardMedia
+                          sx={{ height: 140 }}
+                          image={article.image || "../images/placeholder.png"}
+                          title={article.title}
+                          component={"img"}
+                        />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            component="div"
+                            sx={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                            fontWeight={600}
+                          >
+                            {article.title}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {article.description}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="small"
+                            onClick={() => handleReadMore(article)}
+                          >
+                            Read More
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Tooltip>
                   </Grid>
                 );
               })}

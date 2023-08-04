@@ -24,6 +24,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-return": "error",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "react-hooks/exhaustive-deps": "off",
   },
 };
