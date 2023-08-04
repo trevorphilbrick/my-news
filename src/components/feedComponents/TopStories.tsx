@@ -10,13 +10,21 @@ import {
 } from "@mui/material";
 import { Article } from "../../types/GNewsAPI";
 import useFetchTopStories from "../../hooks/useFetchStories";
+import { useTheme } from "@mui/material";
+import { useEffect } from "react";
 
 // TODO: refactor top level container and grid to house both top stories and sidebar
 
 function TopStories() {
+  const theme = useTheme();
   const { stories, isLoading, error } = useFetchTopStories();
 
   const skeletonLoaderHeights = [190, 200, 180, 200, 180, 180, 200, 160];
+
+  useEffect(
+    () => console.log({ stories, isLoading, error }),
+    [stories, isLoading, error]
+  );
 
   const handleReadMore = (article: Article) => {
     window.open(article.url, "_blank");
@@ -32,8 +40,12 @@ function TopStories() {
         />
       ) : error ? (
         <>
-          <Typography>Unable to load, try refreshing the page...</Typography>
-          <Typography>{error}</Typography>
+          <Typography color={theme.palette.text.primary} variant="h4">
+            Unable to load, try refreshing the page...
+          </Typography>
+          <Typography color={theme.palette.text.primary}>
+            Error message: {error}
+          </Typography>
         </>
       ) : (
         <Card sx={{ mb: 2 }}>

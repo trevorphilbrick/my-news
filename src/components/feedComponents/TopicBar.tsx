@@ -18,7 +18,7 @@ const recentTopics = ["Cryptocurrency", "Russia", "Covid-19"];
 
 function TopicBar() {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("general");
   const setCurrentTopic = useArticleStore((state) => state.setCurrentTopic);
 
   useEffect(() => {
