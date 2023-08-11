@@ -2,9 +2,11 @@ import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase';
 import { useFormik } from 'formik';
-import { Button, Container, TextField } from '@mui/material';
+import { Button, Container, TextField, Typography } from '@mui/material';
+import { useAuthStore } from '../zustand/useAuthStore'
 
 const Login = () => {
+    const {setUser} = useAuthStore();
     const navigate = useNavigate();
                 
     const formik = useFormik({
@@ -17,8 +19,9 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
-                navigate("/welcome")
-                console.log(user);
+                setUser(user);
+                console.log('logged in')
+                navigate("/")
             })
             .catch((error) => {
                 console.log(error)
@@ -59,7 +62,9 @@ const Login = () => {
                         <Button color="primary" variant="contained" fullWidth type="submit">
                             Login
                         </Button>
+                        <Typography sx={{color: 'white', mt: 1}} onClick={() => navigate("/signUp")}>Don't have an account with us?</Typography>
                     </form>
+                    
                     </Container>
                 </Container>
         </>
