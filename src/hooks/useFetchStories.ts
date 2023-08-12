@@ -4,8 +4,11 @@ import useArticleStore from "../zustand/articleStore";
 const useFetchTopStories = () => {
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const currentTopic = useArticleStore((state) => state.currentTopic);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { currentTopic, setCurrentArticles, currentArticles } = useArticleStore(
+    (state) => state
+  );
 
   useEffect(() => {
     setIsLoading(true);
@@ -15,21 +18,24 @@ const useFetchTopStories = () => {
       }&lang=en&token=${import.meta.env.VITE_GNEWS_API_KEY as string}`
     )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.errors) {
-          setError(data.errors);
+      .then(({ articles, error }) => {
+        if (articles) {
+          setStories(articles as []);
+          setCurrentArticles(articles as []);
         }
-        setStories(data.articles);
+        if (error) {
+          setError(true);
+          setErrorMessage(error as string);
+        }
         setIsLoading(false);
       })
       .catch((err) => {
-        setError(err);
-        setIsLoading(false);
+        setErrorMessage(err as string);
+        setError(true);
       });
   }, [currentTopic]);
 
-  return { stories, isLoading, error };
+  return { currentArticles, isLoading, error, errorMessage };
 };
 
 export default useFetchTopStories;

@@ -40,9 +40,6 @@ function TopicBar() {
       sx={{
         backgroundColor: theme.palette.background.default,
         mb: 4,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
       }}
     >
       <Tabs
@@ -72,7 +69,7 @@ function TopicBar() {
         <Input
           placeholder="Search"
           startAdornment={<SearchIcon sx={{ mr: 1 }} />}
-          sx={{ width: 240 }}
+          fullWidth
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />

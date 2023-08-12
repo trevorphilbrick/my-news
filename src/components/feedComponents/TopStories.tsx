@@ -18,13 +18,14 @@ import { useEffect } from "react";
 
 function TopStories() {
   const theme = useTheme();
-  const { stories, isLoading, error } = useFetchTopStories();
+  const { currentArticles, isLoading, error, errorMessage } =
+    useFetchTopStories();
 
   const skeletonLoaderHeights = [190, 200, 180, 200, 180, 180, 200, 160];
 
   useEffect(
-    () => console.log({ stories, isLoading, error }),
-    [stories, isLoading, error]
+    () => console.log({ currentArticles, isLoading, error, errorMessage }),
+    [currentArticles, isLoading, error]
   );
 
   const handleReadMore = (article: Article) => {
@@ -39,34 +40,37 @@ function TopStories() {
           sx={{ height: 200, width: "100%", mb: 2 }}
           animation="wave"
         />
-      ) : error ? (
+      ) : error === true ? (
         <>
           <Typography color={theme.palette.text.primary} variant="h4">
             Unable to load, try refreshing the page...
           </Typography>
           <Typography color={theme.palette.text.primary}>
-            Error message: {error}
+            Error message- {errorMessage.toString()}
           </Typography>
         </>
       ) : (
         <Card sx={{ mb: 2 }}>
           <CardMedia
             sx={{ height: 200 }}
-            image={stories[0]?.image || "../images/placeholder.png"}
-            title={stories[0]?.title}
+            image={currentArticles[0]?.image || "../images/placeholder.png"}
+            title={currentArticles[0]?.title}
             component={"img"}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {stories ? stories[0]?.title : null}
+              {currentArticles ? currentArticles[0]?.title : null}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {stories ? stories[0]?.description : null}
+              {currentArticles ? currentArticles[0]?.description : null}
             </Typography>
           </CardContent>
           <CardActions>
-            {stories ? (
-              <Button size="small" onClick={() => handleReadMore(stories[0])}>
+            {currentArticles ? (
+              <Button
+                size="small"
+                onClick={() => handleReadMore(currentArticles[0])}
+              >
                 Read More
               </Button>
             ) : null}
@@ -89,7 +93,7 @@ function TopStories() {
             })
           : error
           ? null
-          : stories
+          : currentArticles
               ?.filter((_item, index) => index !== 0)
               .map((article: Article, index) => {
                 return (
