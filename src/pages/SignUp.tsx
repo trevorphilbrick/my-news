@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { useAuthStore } from '../zustand/useAuthStore'
 import { useFormik } from 'formik';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Button, Container, TextField, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
  
 const SignUp = () => {
     const {setUser} = useAuthStore();
     const navigate = useNavigate();
     const [accountExists, setAccountExists] = useState(false)
+
+    const theme = useTheme(); 
 
     const formik = useFormik({
         initialValues: {
@@ -88,7 +90,7 @@ const SignUp = () => {
                         <Button color="primary" variant="contained" fullWidth type="submit">
                             Create Account
                         </Button>
-                    <Typography sx={{color: 'white', mt: 1}} onClick={() => navigate("/login")}>Already have an account?</Typography>
+                    <Typography sx={{color: 'black', mt: 1}} onClick={() => navigate("/login")}>Already have an account? <b style={{color: theme.palette.primary.main, cursor: 'pointer'}} >Login</b>.</Typography>
                     </form>
                 </Container>
                 </Container>
